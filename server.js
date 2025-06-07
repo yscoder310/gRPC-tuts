@@ -9,11 +9,12 @@ function sayHello(call, callback) {
 }
 
 function main() {
+  const PORT = process.env.PORT || 50051;
   const server = new grpc.Server();
   server.addService(proto.Greeter.service, { SayHello: sayHello });
-  server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {
+  server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), () => {
     server.start();
-    console.log('gRPC server running at http://0.0.0.0:50051');
+    console.log(`gRPC server running at 0.0.0.0:${PORT}`);
   });
 }
 
